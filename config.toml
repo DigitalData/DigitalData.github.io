@@ -9,7 +9,7 @@ description = "A storage location for thoughts and proofs of work. This should p
 default_language = "en"
 
 # The site theme to use.
-theme = "duckquill"
+# theme = ""
 
 # For overriding the default output directory `public`, set it to another value (e.g.: "docs")
 output_dir = "public"
@@ -46,7 +46,7 @@ exclude_paginated_pages_in_sitemap = "none"
 # The filenames to use for the feeds. Used as the template filenames, too.
 # Defaults to ["atom.xml"], which has a built-in template that renders an Atom 1.0 feed.
 # There is also a built-in template "rss.xml" that renders an RSS 2.0 feed.
-feed_filenames = ["atom.xml"]
+feed_filenames = []
 
 # The number of articles to include in the feed. All items are included if
 # this limit is not set (the default).
@@ -188,7 +188,7 @@ include_content = true
 # Accepted values:
 # - "elasticlunr_javascript", "elasticlunr_json"
 # - "fuse_javascript", "fuse_json"
-index_format = "elasticlunr_javascript"
+index_format = "elasticlunr_json"
 
 # Optional translation object for the default language
 # Example:
@@ -222,55 +222,5 @@ index_format = "elasticlunr_javascript"
 #
 # author value will be available using {{ config.extra.author }} in templates
 #
+
 [extra]
-
-# Duckquill theme
-
-# default_theme: Which theme should be used by default (light/dark).
-default_theme = "dark"
-
-# accent_color: Sets theme and browser theme color.
-accent_color = "#bfcde0"
-
-# accent_color_dark: Ditto but for the dark theme. If not set regular variant will be used.
-accend_color_dark = "#3b3355"
-
-# emoji_favicon: Use emoji as a favicon. Only one emoji is being rendered, everything else is truncated.
-emoji_favicon = "😎"
-
-# styles: Additional CSS styles; expects them to be in the ./static/ directory. 
-# If you are using Sass it will be generated there automatically.
-styles = []
-
-# scripts: Additional JavaScript scripts; expects them to be in the ./static/ directory.
-scripts = []
-
-# katex: Whether to enable the KaTeX library for rendering LaTeX.
-katex = true
-
-# toc: Enables table of contents. Only first 2 levels of headings are listed.
-toc = true
-
-# toc_inline: Whether to render inline table of contents at the top of all pages, in addition to floating quick navigation buttons.
-toc_inline = true
-
-# toc_ordered: Whether to use numbered (ordered) list for table of contents.
-toc_ordered = true
-
-# toc_sidebar: Whether to display table of contents as a sidebar (useful for long pages).
-toc_sidebar = true
-
-# card: When set to false disables share preview cards globally.
-card = true
-
-# Other variables:
-
-# apple_touch_icon: Filename of the colocated Apple Touch Icon.
-# favicon: Filename of the colocated favicon.
-# card: Filename of the colocated metadata card.
-# archive: Displays an archived message.
-# trigger: Displays a trigger warning message.
-# disclaimer: Displays a disclaimer message.
-
-# go_to_top: Displays a “go to top” button.
-go_to_top = true
