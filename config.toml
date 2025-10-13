@@ -228,7 +228,6 @@ index_format = "elasticlunr_json"
 
 sections = [
   { name = "posts", path = "/posts", is_external = false },
-  { name = "categories", path = "/categories", is_external = false },
   { name = "tags", path = "/tags", is_external = false },
 ]
 blog_section_path = "/posts"
