@@ -3,7 +3,6 @@ author="Xavier Travers"
 title = "Creating this dev-blog"
 description = "The beginnings of the dev-blog. And a little about how I work (or don't)."
 date=2025-10-11
-draft=false
 [taxonomies]
 categories=["dev-blog"]
 tags=["dev-blog"]
@@ -43,3 +42,7 @@ I find that I often have ideas and thoughts that I would love to share with othe
 Speaking of motivation, I struggle with perfectionism. When I start a project, I must complete it **perfectly**. If I cannot achieve this, I will move onto something else.
 This influences my ability to work on personal projects in a way that I do not appreciate.
 I have started to work on many projects, few of which have seen the light of day. This dev-blog presents a great way to provide an explicit extrinsic motivator for working on things: prying eyes. Hopefully, the prospect of readers such as yourself viewing my work in an in-progress and completed state will motivate me to action.
+
+Cheers,
+
+Xavier
