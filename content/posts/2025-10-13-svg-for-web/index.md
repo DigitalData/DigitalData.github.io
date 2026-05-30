@@ -56,7 +56,7 @@ So, as much as we love the free and open-source software out there, one must app
 Anyways, with the icon `.svg` in hand, I went to add it to the website.
 Serene makes this easy: simple add the image to the `static/icon/` folder and refer to it by name in the links front-matter in your homepage index.
 
-```markdown,name=content/_index.md,linenos,hl_lines=2
+```toml,name=content/_index.md,linenos,hl_lines=2
 links = [
     { name = "CodeDigital", icon = "codedigital", url = "https://codedigital.me" },
     { name = "GitHub", icon = "github", url = "https://github.com/digitaldata" },
