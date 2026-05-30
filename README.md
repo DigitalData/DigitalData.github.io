@@ -1,3 +1,3 @@
-# DigitalData.github.io
+# [DigitalData.github.io](https://DigitalData.github.io)
 
 Built with [zola](https://getzola.org) and [serene](https://github.com/isunjn/serene)
