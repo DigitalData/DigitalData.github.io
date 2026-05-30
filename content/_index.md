@@ -26,10 +26,10 @@ recent_more_text = "more »"
 date_format = "%b %-d, %Y"
 +++
 
-Hello, welcome to my dev-blog.
+Hello, welcome to my blog.
 You can expect to see inconsistent posting here about various projects I undertake and may not finish.
 
-A good starting point would be [my post about creating this website](/posts/creating-this-dev-blog) (a bit of inception).
+A good starting point would be [my post about creating this website](/posts/creating-this-blog).
 
 ---
 

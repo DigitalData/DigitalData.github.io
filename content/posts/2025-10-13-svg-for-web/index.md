@@ -136,7 +136,7 @@ However, I stormed ahead and wrote the post. I reaffirmed that I actually had go
 
 **My writing skills need work, and that's okay.**
 This post might read like a jumbled mess, and that is absolutely fine.
-Not only is this dev-blog meant to provide me with a dumping ground (deliberate word choice) of my thoughts, but I will definitely improve on my writing as I practice.
+Not only is this blog meant to provide me with a dumping ground (deliberate word choice) of my thoughts, but I will definitely improve on my writing as I practice.
 You don't get anywhere without that first step.
 
 I hope you'll bear with me and I'll bear with me as I continue.

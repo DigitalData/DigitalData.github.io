@@ -1,5 +1,5 @@
 +++
-title = "Posts @ Xavier's Dev-Blog"
+title = "Posts @ Xavier's Blog"
 description = "My blog site."
 sort_by = "date"
 template = "blog.html"

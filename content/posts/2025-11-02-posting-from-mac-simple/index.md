@@ -1,14 +1,14 @@
 +++
 author = "Xavier Travers"
 title = "Posting from my Mac, AKA Simplicity rules!"
-description = "Just wanted to mention how happy I am with my decision to make this dev-blog the way I have. It's really simple to get up and running."
+description = "Just wanted to mention how happy I am with my decision to make this blog the way I have. It's really simple to get up and running."
 date = 2025-11-02
 [taxonomies]
 categories = ["thoughts"]
-tags = ["web", "dev-blog"]
+tags = ["web"]
 +++
 
-I just wanted to iterate (and will likely re-iterate) how happy I am to have chosen this initial system for my personal dev-blog ([Zola](https://www.getzola.org/)). 
+I just wanted to iterate (and will likely re-iterate) how happy I am to have chosen this initial system for my personal blog ([Zola](https://www.getzola.org/)). 
 
 I am about to leave on a weekend away with some friends, and thought I might have some downtime (with weak internet, hence no watching TV/videos) to use towards drafting some posts I have wanted to make. In preparation for this, I felt it would be smart to pre-install Zola and make sure that I can actually write some posts while I'm not able to rely on internet. 
 
