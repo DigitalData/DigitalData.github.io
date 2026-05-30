@@ -1,7 +1,7 @@
 +++
 author="Xavier Travers"
 title="Distributing real estate demand: some ideas"
-description="Naive ideas to could help relieve the costs of housing outpacing first home buyers' potential."
+description="Naive ideas to help relieve the costs of housing outpacing first home buyers' potential."
 date=2026-05-30
 [taxonomies]
 categories = ["thoughts"]
