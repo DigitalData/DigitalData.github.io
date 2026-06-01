@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  
+  
+    
+  
+  <meta name="description" content="While working on this site, I discovered that making SVGs in a simple web format is not simple. Let&#x27;s solve that.">
+
+  <title>Exporting SVG icons for the web</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="https://digitaldata.github.io/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://digitaldata.github.io/img/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://digitaldata.github.io/img/apple-touch-icon.png">
+  
+  <style>
+
+  /* light mode colors */
+  body {
+    --primary-color: #5871a2;
+    --primary-pale-color: #5871a233;
+    --primary-decoration-color: #5871a210;
+    --bg-color: #ffffff;
+    --text-color: #2f3030;
+    --text-pale-color: #767676;
+    --text-decoration-color: #a9a9a9;
+    --highlight-mark-color: #5f75b020;
+
+    --callout-note-color: #5871a2;
+    --callout-tip-color: #268556;
+    --callout-important-color: #885fc9;
+    --callout-warning-color: #ab6632;
+    --callout-caution-color: #c64e4e;
+  }
+
+  /* dark mode colors */
+  body.dark {
+    --primary-color: #6f8fd1;
+    --primary-pale-color: #6f8fd166;
+    --primary-decoration-color: #6f8fd112;
+    --bg-color: #1c1c1c;
+    --text-color: #c1c1c1;
+    --text-pale-color: #848484;
+    --text-decoration-color: #5f5f5f;
+    --highlight-mark-color: #8296cb3b;
+
+    --callout-note-color: #6f8fd1;
+    --callout-tip-color: #47976f;
+    --callout-important-color: #9776cd;
+    --callout-warning-color: #ad7a52;
+    --callout-caution-color: #d06161;
+  }
+
+  /* typography */
+  body {
+    --main-font: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --code-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --homepage-max-width: 768px;
+    --main-max-width: 768px;
+    --avatar-size: 60px;
+    --font-size: 16px;
+    --line-height: 1.75;
+    --img-border-radius: 0px;
+    --detail-border-radius: 0px;
+    --dark-mode-img-brightness: 0.75;
+    --dark-mode-chart-brightness: 0.75;
+    --inline-code-border-radius: 2px;
+    --inline-code-bg-color: var(--primary-decoration-color);
+    --block-code-border-radius: 0px;
+    --block-code-border-color: var(--primary-color);
+    --detail-border-color: var(--primary-color);
+  }
+
+</style>
+
+  <link rel="stylesheet" href="https://digitaldata.github.io/main.css">
+  
+
+<link id="hl" rel="stylesheet" type="text/css" href="/giallo-light.css" />
+
+
+
+  
+</head>
+
+<body class="post">
+  
+  <script>
+    const theme = sessionStorage.getItem('theme');
+    const match = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if ((theme && theme == 'dark') || (!theme && match)) {
+      document.body.classList.add('dark');
+      const hl = document.querySelector('link#hl');
+      if (hl) hl.href = 'https://digitaldata.github.io/giallo-dark.css';
+    }
+  </script>
+  
+  
+<div id="wrapper">
+  <div id="blank"></div>
+  <aside>
+    
+    
+    <nav>
+      <ul>
+        
+        <li>
+          <a class="h2" href="#so-what">So what?</a>
+          
+        </li>
+        
+        <li>
+          <a class="h2" href="#matching-the-icon-style">Matching the icon style</a>
+          
+        </li>
+        
+        <li>
+          <a class="h2" href="#fixing-the-icon">Fixing the icon</a>
+          
+          <ul>
+            
+            <li>
+              <a class="h3" href="#python-s-xml-library-tries-too-hard">Python’s xml library tries too hard…</a>
+            </li>
+            
+            <li>
+              <a class="h3" href="#javascript-handles-xml-formats-better">Javascript handles XML formats better</a>
+            </li>
+            
+          </ul>
+          
+        </li>
+        
+        <li>
+          <a class="h2" href="#why-did-i-write-this-up">Why did I write this up?</a>
+          
+        </li>
+        
+      </ul>
+    </nav>
+    
+    
+    <button id="back-to-top" aria-label="back to top">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+
+    </button>
+    
+  </aside>
+  <main>
+    
+<header>
+  <nav>
+    <a id="back-link" href="https:&#x2F;&#x2F;digitaldata.github.io&#x2F;posts">← Back</a>
+  </nav>
+</header>
+
+
+    <div>
+      
+      
+      
+      
+      <div id="copy-cfg" style="display: none;" data-copy-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+" data-check-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+"></div>
+      
+      <article class="prose">
+        <h1>Exporting SVG icons for the web</h1>
+        <div id="post-info">
+          <div id="date">
+            <span id="publish">Oct 13, 2025</span>
+            </div>
+
+          
+          <div id="tags">
+            <a class="instant" href="https://digitaldata.github.io/tags/web"><span>#</span>web</a><a class="instant" href="https://digitaldata.github.io/tags/svg"><span>#</span>svg</a><a class="instant" href="https://digitaldata.github.io/tags/languages-python"><span>#</span>languages&#x2F;python</a><a class="instant" href="https://digitaldata.github.io/tags/languages-javascript"><span>#</span>languages&#x2F;javascript</a>
+          </div>
+          
+        </div>
+
+        
+        
+
+        
+
+        <p>I chose the theme for this website with one goal in mind: simplicity.
+It’s a simple theme, it’s simple to add content and the setup was simple. Great!
+This website will likely change and evolve a lot over time.
+I chose this theme to circumvent the analysis paralysis that I run into while optimising for the future.</p>
+<h2 id="so-what">So what?<a class="zola-anchor" href="#so-what" aria-label="Anchor link for: so-what" style="visibility: hidden;"></a>
+</h2>
+<p>One of my favorite aspects of <a class="" rel="noopener external" target="_blank" href="https://github.com/isunjn/serene">serene</a> is this profile header/banner on the homepage.</p>
+<p><img src="https://digitaldata.github.io/posts/svg-for-web/profile-header-screenshot.png" alt="image of header banner with profile photo" /></p>
+<p>You may/may not have noticed one of icons on the right has a pink outline, and links to my old <a class="" rel="noopener external" target="_blank" href="https://p5js.org/">p5.js</a> portfolio website, <a class="" rel="noopener external" target="_blank" href="https://codedigital.me">&lt;code&gt;digital</a>. I wanted to include a nod to my previous work that was stylish, but matched the style of icons used by the font.
+This was apparently, not a simple goal to achieve.</p>
+<p><em>I must admit I spent more time on this than I expected to.</em></p>
+<h2 id="matching-the-icon-style">Matching the icon style<a class="zola-anchor" href="#matching-the-icon-style" aria-label="Anchor link for: matching-the-icon-style" style="visibility: hidden;"></a>
+</h2>
+<p>The serene theme uses <a class="" rel="noopener external" target="_blank" href="https://remixicon.com/">Remix Icon</a> for the logos included.
+These have a clean outlined look. My original &lt;code&gt;digital website logo would stand out like a sore thumb.</p>
+<p><img src="https://digitaldata.github.io/posts/svg-for-web/codeArrowIcon.png" alt="code digital website icon" />
+<em>I was and still am quite fond of a pixelated aesthetic.</em></p>
+<p>So to match the style of Remix Icon, I needed to:</p>
+<ol>
+<li>Vectorize the icon with an outline style.</li>
+<li>Save it to an SVG format similar to Remix Icon’s.</li>
+</ol>
+<details >
+  <summary><span>Sidequest - Relearn vector-art software</span></summary>
+  <p>I have been trying to remove subscriptions and open-source-ify my software library of late.
+I may post about this.</p>
+<p>Either way, as part of this goal, I wanted to try <a class="" rel="noopener external" target="_blank" href="https://inkscape.org/">Inkscape</a>.
+I have <a class="" rel="noopener external" target="_blank" href="https://affinity.serif.com/en-us/designer/">Affinity Designer 2</a> and have never had an issue before, but I thought, “if I need to relearn the software anyway, why not learn the free/open-source software that won’t require me to pay for a new update.”</p>
+<p>To cut a long story short, I got a bit overwhelmed with the user interface, and was concerned that this would eat my day just to add a simple icon to my website. <em>you may learn that I still managed to spend a lot of time to add that simple icon.</em>
+Either way, I decided to check if I still had some Affinity Designer 2 muscle memory (or even if the UI was just a bit more user-friendly)…
+I cannot understate how much more intuitive the user interface felt. This could just be because I used the software before, but it just seemed to click with me.
+So, as much as we love the free and open-source software out there, one must appreciate the value of having a business with funds to spare on proper user experience design/research.</p>
+<p>#notsponsored</p>
+
+</details>
+<p>Anyways, with the icon <code>.svg</code> in hand, I went to add it to the website.
+Serene makes this easy: simple add the image to the <code>static/icon/</code> folder and refer to it by name in the links front-matter in your homepage index.</p>
+<pre class="giallo z-code"><code data-lang="toml" data-name="content/_index.md"><span class="giallo-l"><span aria-hidden="true" class="giallo-ln">1</span><span class="z-variable z-other">links</span><span> =</span><span> [</span></span>
+<span class="giallo-l z-hl"><span aria-hidden="true" class="giallo-ln">2</span><span>    {</span><span class="z-variable z-other"> name</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">CodeDigital</span><span class="z-string">&quot;</span><span>,</span><span class="z-variable z-other"> icon</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">codedigital</span><span class="z-string">&quot;</span><span>,</span><span class="z-variable z-other"> url</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">https://codedigital.me</span><span class="z-string">&quot;</span><span> }</span><span>,</span></span>
+<span class="giallo-l"><span aria-hidden="true" class="giallo-ln">3</span><span>    {</span><span class="z-variable z-other"> name</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">GitHub</span><span class="z-string">&quot;</span><span>,</span><span class="z-variable z-other"> icon</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">github</span><span class="z-string">&quot;</span><span>,</span><span class="z-variable z-other"> url</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">https://github.com/digitaldata</span><span class="z-string">&quot;</span><span> }</span><span>,</span></span>
+<span class="giallo-l"><span aria-hidden="true" class="giallo-ln">4</span><span>    {</span><span class="z-variable z-other"> name</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">LinkedIn</span><span class="z-string">&quot;</span><span>,</span><span class="z-variable z-other"> icon</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">linkedin</span><span class="z-string">&quot;</span><span>,</span><span class="z-variable z-other"> url</span><span> =</span><span class="z-string"> &quot;</span><span class="z-string">https://www.linkedin.com/in/xavltrav/</span><span class="z-string">&quot;</span><span> }</span><span>,</span></span>
+<span class="giallo-l"><span aria-hidden="true" class="giallo-ln">5</span><span>]</span></span></code></pre>
+<p>All good, right?</p>
+<p>Here is what I saw:
+<img src="https://digitaldata.github.io/posts/svg-for-web/bad-profile-header-screenshot.png" alt="image of header banner with profile photo but icon to code digital website is too big and arrow is black on black background" /></p>
+<ul>
+<li>The size was way too large.</li>
+<li>The colour of the arrows was dark on a dark background.</li>
+</ul>
+<h2 id="fixing-the-icon">Fixing the icon<a class="zola-anchor" href="#fixing-the-icon" aria-label="Anchor link for: fixing-the-icon" style="visibility: hidden;"></a>
+</h2>
+<p>At first I thought that Affinity Designer 2 would have an export option specifically for the web, with scaling options and such. Alas, I am not so lucky. So I needed to dive into an example Remix Icon and compare it with what I had.</p>
+<p>I noticed the following differences:</p>
+<pre class="giallo z-code"><code data-lang="xml" data-name="codedigital.svg"><span class="giallo-l z-hl"><span aria-hidden="true" class="giallo-ln"> 1</span><span>&lt;?</span><span class="z-entity z-name z-tag">xml</span><span class="z-entity"> version</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">1.0</span><span class="z-string">&quot;</span><span class="z-entity"> encoding</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">UTF-8</span><span class="z-string">&quot;</span><span class="z-entity"> standalone</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">no</span><span class="z-string">&quot;</span><span>?&gt;</span></span>
+<span class="giallo-l z-hl"><span aria-hidden="true" class="giallo-ln"> 2</span><span>&lt;!</span><span class="z-keyword">DOCTYPE</span><span class="z-variable z-language"> svg</span><span> PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot; &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;</span><span>&gt;</span></span>
+<span class="giallo-l z-hl"><span aria-hidden="true" class="giallo-ln"> 3</span><span>&lt;</span><span class="z-entity z-name z-tag">svg</span><span class="z-entity"> width</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">100%</span><span class="z-string">&quot;</span><span class="z-entity"> height</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">100%</span><span class="z-string">&quot;</span><span class="z-entity"> viewBox</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">0 0 24 24</span><span class="z-string">&quot;</span><span class="z-entity"> version</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">1.1</span><span class="z-string">&quot;</span><span class="z-entity"> xmlns</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">http://www.w3.org/2000/svg</span><span class="z-string">&quot;</span><span class="z-entity"> xmlns</span><span class="z-entity">:</span><span class="z-entity">xlink</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">http://www.w3.org/1999/xlink</span><span class="z-string">&quot;</span><span class="z-entity"> xml</span><span class="z-entity">:</span><span class="z-entity">space</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">preserve</span><span class="z-string">&quot;</span><span class="z-entity"> xmlns</span><span class="z-entity">:</span><span class="z-entity">serif</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">http://www.serif.com/</span><span class="z-string">&quot;</span><span class="z-entity"> style</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;</span><span class="z-string">&quot;</span><span>&gt;</span></span>
+<span class="giallo-l"><span aria-hidden="true" class="giallo-ln"> 4</span><span>    &lt;</span><span class="z-entity z-name z-tag">path</span><span class="z-entity"> d</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">M22,8l0,8c0,3.311 -2.689,6 -6,6l-8,0c-3.311,0 -6,-2.689 -6,-6l0,-8c0,-3.311 2.689,-6 6,-6l8,0c3.311,0 6,2.689 6,6Zm-2,0c0,-2.208 -1.792,-4 -4,-4l-8,0c-2.208,0 -4,1.792 -4,4l0,8c0,2.208 1.792,4 4,4l8,0c2.208,0 4,-1.792 4,-4l0,-8Z</span><span class="z-string">&quot;</span><span class="z-entity"> style</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">fill:#de00a6;</span><span class="z-string">&quot;</span><span>/&gt;</span></span>
+<span class="giallo-l"><span aria-hidden="true" class="giallo-ln"> 5</span><span>    &lt;</span><span class="z-entity z-name z-tag">g</span><span>&gt;</span></span>
+<span class="giallo-l z-hl"><span aria-hidden="true" class="giallo-ln"> 6</span><span>        &lt;</span><span class="z-entity z-name z-tag">path</span><span class="z-entity"> d</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">M13.624,17.485c-0.376,0.404 -1.009,0.427 -1.413,0.052c-0.404,-0.376 -0.427,-1.01 -0.051,-1.414l3.834,-4.123l-3.538,-3.804l-5.149,-0c-0.552,-0 -1,-0.448 -1,-1c-0,-0.552 0.448,-1 1,-1l5.585,-0c0.278,-0 0.543,0.115 0.732,0.319l4.468,4.804c0.357,0.384 0.357,0.978 0,1.362l-4.468,4.804Z</span><span class="z-string">&quot;</span><span>/&gt;</span></span>
+<span class="giallo-l z-hl"><span aria-hidden="true" class="giallo-ln"> 7</span><span>        &lt;</span><span class="z-entity z-name z-tag">path</span><span class="z-entity"> d</span><span>=</span><span class="z-string">&quot;</span><span class="z-string">M10.098,15.804c0.552,0 1,0.448 1,1c0,0.552 -0.448,1 -1,1l-2.791,0c-0.398,0 -0.758,-0.236 -0.917,-0.6c-0.159,-0.365 -0.086,-0.789 0.185,-1.081l3.848,-4.138l-1.17,-1.312c-0.367,-0.412 -0.33,-1.045 0.082,-1.412c0.412,-0.367 1.045,-0.331 1.412,0.081l1.775,1.993c0.343,0.385 0.336,0.968 -0.015,1.346l-2.905,3.123l0.496,0Z</span><span class="z-string">&quot;</span><span>/&gt;</span></span>
+<span class="giallo-l"><span aria-hidden="true" class="giallo-ln"> 8</span><span>    &lt;/</span><span class="z-entity z-name z-tag">g</span><span>&gt;</span></span>
+<span class="giallo-l"><span aria-hidden="true" class="giallo-ln"> 9</span><span>&lt;/</span><span class="z-entity z-name z-tag">svg</span><span>&gt;</span></span></code></pre>
+<ul>
+<li>There was an <code>xml</code> declaration. Seemed redundant given it’s a <code>.svg</code>.</li>
+<li>There was a <code>!DOCTYPE</code> tag. Also redundant.</li>
+<li>The <code>svg</code> had both its width and height set to <code>100%</code>. That may be a source of the sizing issue.</li>
+<li>The <code>path</code> tags in the arrow group (highlighted lines 6-7). This needs a <code>fill="currentColor"</code> attribute.</li>
+</ul>
+<p>Now I could have addressed all of these issues manually and called it a day.
+I probably <em>should</em> have.
+Instead, I decided that I may want to do this again, so I built a Python script.</p>
+<h3 id="python-s-xml-library-tries-too-hard">Python’s <code>xml</code> library tries too hard…<a class="zola-anchor" href="#python-s-xml-library-tries-too-hard" aria-label="Anchor link for: python-s-xml-library-tries-too-hard" style="visibility: hidden;"></a>
+</h3>
+<p>… and sucks as a result.</p>
+<p>I really struggled with extra “useful” information being added to the XML after being parsed by the <code>xml.etree.ElementTree</code>.</p>
+<p>For example, I had to manually remove the namespace before parsing the content of the <code>.svg</code> or I would get have every tag prefixed with a random <code>ns0</code> namespace. I could not find a argument, flag, or function, to disable this “feature”. In the end it was just simpler to remove the <code>xmlns="http://www.w3.org/2000/svg"</code> before passing the file content to the parser, and to just add as a parameter after parsing.</p>
+<p>There were plenty of these idiosyncracies I had to account for before I could get a simple parser script working. Another such situation I had to deal with was the formatting the XML object with <code>indent</code> (for display purposes) causing the resulting output to permanently keep indentations and new lines. Not very nice if I just wanted to keep the content minified. It was a minor issue, but it felt like there should have just been an interface with <code>pprint</code> or some <code>unparse</code> function with arguments to configure indentation.</p>
+<p>Either way, the display issue is fixed after running <a class="" rel="noopener external" target="_blank" href="https://github.com/DigitalData/svg-for-web/blob/master/convert_svg.py">the script</a>. I recommend against using the Python script as I have since created a small website to do this, with better configuration options.</p>
+<h3 id="javascript-handles-xml-formats-better">Javascript handles XML formats better<a class="zola-anchor" href="#javascript-handles-xml-formats-better" aria-label="Anchor link for: javascript-handles-xml-formats-better" style="visibility: hidden;"></a>
+</h3>
+<p>I rewrote the above functionality using with an HTML form and a simple client-side script in Javascript.
+Javascript handles XML (and therefore SVG) file formats in a much more intuitive way.
+This makes a lot of sense since one of the language’s key usecases is manipulating the HTML (a tag-based XML-like markup language) via its Document Object Model API. This API has been extended to support SVG modification.</p>
+<p>You can view and use the <a class="" rel="noopener external" target="_blank" href="https://DigitalData.github.io/svg-for-web">SVG-for-web converter here</a>.
+As you’ll see when looking at the header on the live page, the recommended options (as well as applying a width and height of <code>18</code>) work perfectly to help me create my own SVG icons for web use.</p>
+<h2 id="why-did-i-write-this-up">Why did I write this up?<a class="zola-anchor" href="#why-did-i-write-this-up" aria-label="Anchor link for: why-did-i-write-this-up" style="visibility: hidden;"></a>
+</h2>
+<p>I spent so much time on this just to get an icon working, so I felt that I should milk the experience a little.</p>
+<p>Here is what I learned in the process:</p>
+<p><strong>I need to start picking my battles better.</strong>
+I need to build a point of reflection into my work style in order to prevent going too deep into these rabbit holes where the payoff may be minimal. This will be a tough habbit to crack. While writing this post, I almost fell down the following rabbit holes:</p>
+<ul>
+<li>Can I convert the header/banner into a shortcode that I can paste in any of my markdown files? <em>Why would I ever need this again?</em></li>
+<li>Where did Javascript originate? What was its original purpose? <em>I only needed this information for a certain expression I wanted to use (and didn’t, in the end). No need to go deeper if the information did not match what I was looking for.</em></li>
+</ul>
+<p><strong>Just write the damn post. Even if I think it’s wrong/useless work.</strong>
+I was debating whether to write this up today at work. My reasoning to be so dismissive was:</p>
+<ul>
+<li>I made the assumption that, while Affinity Designer 2 does not have an “Export for web icon” settings menu, Adobe Illustrator probably does. I have not checked this assumption. This article and resulting online tool would therefore not be as useful enough to merit a write-up.</li>
+<li>Perhaps I had over-engineered or re-engineered this solution. There is very likely a better tool out there to prepare SVGs for use as web icons.</li>
+</ul>
+<p>However, I stormed ahead and wrote the post. I reaffirmed that I actually had good reasoning for the scripting decisions that I made, and feel a sense of pride as I reflect on this post.</p>
+<p><strong>My writing skills need work, and that’s okay.</strong>
+This post might read like a jumbled mess, and that is absolutely fine.
+Not only is this blog meant to provide me with a dumping ground (deliberate word choice) of my thoughts, but I will definitely improve on my writing as I practice.
+You don’t get anywhere without that first step.</p>
+<p>I hope you’ll bear with me and I’ll bear with me as I continue.</p>
+<p>Cheers,</p>
+<p>Xavier</p>
+
+      </article>
+
+      
+      
+
+      
+      
+    </div>
+
+    
+
+
+<footer>
+  <div class="left">
+    <div class="copyright">
+      © 2026 Xavier Travers
+      
+      <span>|</span>
+      Built with <a href="https://www.getzola.org" rel="noreferrer" target="_blank">zola</a> and <a href="https://github.com/isunjn/serene" rel="noreferrer" target="_blank">serene</a>
+      
+    </div>
+  </div>
+
+  <div class="right">
+    
+    
+    
+    
+
+    
+    
+    
+    <button id="theme-toggle" aria-label="theme switch">
+      <span class="moon-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M10 7C10 10.866 13.134 14 17 14C18.9584 14 20.729 13.1957 21.9995 11.8995C22 11.933 22 11.9665 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C12.0335 2 12.067 2 12.1005 2.00049C10.8043 3.27098 10 5.04157 10 7ZM4 12C4 16.4183 7.58172 20 12 20C15.0583 20 17.7158 18.2839 19.062 15.7621C18.3945 15.9187 17.7035 16 17 16C12.0294 16 8 11.9706 8 7C8 6.29648 8.08133 5.60547 8.2379 4.938C5.71611 6.28423 4 8.9417 4 12Z" fill="currentColor"></path></svg>
+</span>
+      <span class="sun-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z" fill="currentColor"></path></svg>
+</span>
+    </button>
+    
+  </div>
+</footer>
+
+
+
+
+
+  </main>
+</div>
+
+  
+<script src="/js/lightense.min.js"></script>
+
+
+  <script src="https://digitaldata.github.io/js/main.js"></script>
+</body>
+
+</html>
